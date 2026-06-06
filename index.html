@@ -49,11 +49,57 @@
     @keyframes rise{to{opacity:1;transform:none}}
   }
 
+  /* view-only: shared links hide the toolbar */
+  body.view-only .toolbar{display:none}
+  body.view-only .stage{padding:24px 14px 40px}
+  @media (max-width:680px){body.view-only .stage{padding:14px 0 30px}}
+
+  /* toast */
+  #toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);
+    background:#111;color:#fff;padding:10px 18px;border-radius:8px;
+    font-family:"Archivo",sans-serif;font-size:13px;font-weight:600;letter-spacing:.02em;
+    z-index:100;opacity:0;pointer-events:none;transition:opacity .18s}
+  #toast.on{opacity:1}
+
+  /* ghost button variant */
+  .btn-ghost{background:transparent;color:#fafafa;border:1px solid #34343a}
+  .btn-ghost:hover{background:#202024;color:#fafafa}
+
+  @page{size:A4;margin:9mm}
   @media print{
     .toolbar{display:none!important}
+    #toast{display:none!important}
     .stage{padding:0!important;background:#fff!important}
     body{background:#fff}
     #resume > *{opacity:1!important;transform:none!important;animation:none!important}
+    /* global compactness — overrides per-template paddings/margins to fit ~2 pages */
+    #resume{padding:0 12mm!important;margin:0 auto!important;max-width:none!important;
+      box-shadow:none!important;border:none!important;border-radius:0!important;
+      font-size:10.5px!important;line-height:1.38!important}
+    #resume section{margin-top:9px!important;margin-bottom:0!important;
+      page-break-inside:auto!important;break-inside:auto!important}
+    #resume .entry{margin-top:6px!important;page-break-inside:avoid;break-inside:avoid}
+    #resume header{padding-bottom:6px!important;margin-bottom:0!important}
+    #resume h1{font-size:22px!important;line-height:1.04!important;letter-spacing:0!important}
+    #resume h2{font-size:10.5px!important;margin-bottom:5px!important;padding-bottom:2px!important}
+    #resume .sh{margin-bottom:5px!important;padding-bottom:3px!important}
+    #resume .sh h2{font-size:11px!important}
+    #resume .role-line{font-size:11px!important;margin-top:2px!important}
+    #resume .contact{margin-top:5px!important;padding-bottom:6px!important;font-size:9.5px!important;gap:2px 10px!important}
+    #resume p,#resume li,#resume dd,#resume dt,#resume .desc,#resume .org,#resume .when{font-size:10px!important;line-height:1.34!important}
+    #resume .role,#resume .pn{font-size:11px!important}
+    #resume ul{margin-top:2px!important}
+    #resume li{margin-bottom:2px!important;padding-left:10px!important}
+    #resume li::before{top:.5em!important}
+    #resume .mini{font-size:10px!important;margin-top:5px!important}
+    #resume dl{gap:1px 12px!important}
+    #resume .chip{font-size:9px!important;padding:2px 6px!important}
+    /* template-specific tightening */
+    #resume .band,#resume .body,#resume .main,#resume .side{padding:8px 12mm!important}
+    #resume .winbar{display:none!important;margin:0!important}
+    #resume .rule{margin-bottom:6px!important}
+    #resume .tl{padding-left:16px!important;margin-left:3px!important}
+    #resume .tl .entry::before{left:-22px!important;width:8px!important;height:8px!important;box-shadow:0 0 0 2px #fff,0 0 0 4px #dfe3e9!important}
   }
 </style>
 <style id="theme"></style>
@@ -78,11 +124,17 @@
         </select>
       </div>
     </div>
+    <button class="btn btn-ghost" id="share" aria-label="Copy a view-only share link for the selected template">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+      Share
+    </button>
     <button class="btn" id="print" aria-label="Print or save as PDF">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
       Print / PDF
     </button>
   </div>
+
+  <div id="toast" role="status" aria-live="polite"></div>
 
   <div class="stage"><article id="resume"></article></div>
 
@@ -639,6 +691,33 @@ function apply(key){
 sel.addEventListener("change", ()=>apply(sel.value));
 window.addEventListener("hashchange", ()=>apply(location.hash.slice(1)));
 document.getElementById("print").addEventListener("click", ()=>window.print());
+
+/* ---------- view-only mode (shared links hide the chooser) ---------- */
+const params = new URLSearchParams(location.search);
+if (params.get("view") === "1") document.body.classList.add("view-only");
+
+/* ---------- share button: copy a view-only link locked to current template ---------- */
+const toastEl = document.getElementById("toast");
+let toastTimer;
+function toast(msg){
+  toastEl.textContent = msg;
+  toastEl.classList.add("on");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>toastEl.classList.remove("on"), 1800);
+}
+document.getElementById("share").addEventListener("click", async ()=>{
+  const key = sel.value;
+  const u = new URL(location.href);
+  u.searchParams.set("view","1");
+  u.hash = key;
+  const link = u.toString();
+  try {
+    await navigator.clipboard.writeText(link);
+    toast(`Share link copied — ${T[key].label} template`);
+  } catch {
+    window.prompt("Copy this share link:", link);
+  }
+});
 
 apply(location.hash.slice(1) || "swiss");
 </script>
