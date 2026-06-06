@@ -65,10 +65,10 @@
   .btn-ghost{background:transparent;color:#fafafa;border:1px solid #34343a}
   .btn-ghost:hover{background:#202024;color:#fafafa}
 
-  /* Uniform page margins give every printed page consistent top/bottom breathing room.
-     NOTE: in Chrome's print dialog, uncheck "More settings → Headers and footers"
-     to hide the date/title/URL — that's a browser toggle, not controllable from CSS. */
-  @page{size:A4;margin:14mm}
+  /* margin:0 leaves no room for Chrome's date/title/URL header & footer.
+     box-decoration-break:clone re-applies #resume's padding on every page,
+     so each printed page still gets a consistent visual top/bottom margin. */
+  @page{size:A4;margin:0}
   @media print{
     .toolbar{display:none!important}
     #toast{display:none!important}
@@ -76,9 +76,12 @@
     body{background:#fff;margin:0!important}
     #resume > *{opacity:1!important;transform:none!important;animation:none!important}
     /* readable print: comfortable text across ~3 pages */
-    #resume{padding:0!important;margin:0 auto!important;max-width:none!important;
+    #resume{padding:14mm 14mm!important;margin:0 auto!important;max-width:none!important;
       box-shadow:none!important;border:none!important;border-radius:0!important;
-      font-size:12.5px!important;line-height:1.5!important}
+      font-size:12.5px!important;line-height:1.5!important;
+      -webkit-box-decoration-break:clone!important;box-decoration-break:clone!important}
+    /* belt-and-braces: also give the first section after a forced break breathing room */
+    #resume section{padding-top:0!important}
     #resume section{margin-top:18px!important;margin-bottom:0!important;
       page-break-inside:auto!important;break-inside:auto!important}
     #resume .entry{margin-top:11px!important;page-break-inside:avoid;break-inside:avoid}
@@ -107,8 +110,8 @@
     #resume .tl .entry::before{left:-22px!important;width:8px!important;height:8px!important;box-shadow:0 0 0 2px #fff,0 0 0 3px #dfe3e9!important}
     /* universal safety: no element should clip its own content in print */
     #resume,#resume *{overflow:visible!important;max-width:100%!important}
-    /* better page-break behavior: avoid orphaning a section heading */
-    #resume h2,#resume .sh{page-break-after:avoid;break-after:avoid}
+    /* keep individual entries intact, but allow sections themselves to split so a
+       small section (e.g. Education) doesn't get punted to its own near-empty page */
     #resume p,#resume li{orphans:2;widows:2}
   }
 </style>
