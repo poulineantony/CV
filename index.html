@@ -65,15 +65,17 @@
   .btn-ghost{background:transparent;color:#fafafa;border:1px solid #34343a}
   .btn-ghost:hover{background:#202024;color:#fafafa}
 
-  @page{size:A4;margin:12mm}
+  /* @page margin 0 leaves no room for the browser's header/footer (date/title/URL),
+     so we move the visual margin INSIDE #resume as padding */
+  @page{size:A4;margin:0}
   @media print{
     .toolbar{display:none!important}
     #toast{display:none!important}
     .stage{padding:0!important;background:#fff!important}
-    body{background:#fff}
+    body{background:#fff;margin:0!important}
     #resume > *{opacity:1!important;transform:none!important;animation:none!important}
     /* readable print: comfortable text across ~3 pages */
-    #resume{padding:0!important;margin:0 auto!important;max-width:none!important;
+    #resume{padding:14mm 14mm!important;margin:0 auto!important;max-width:none!important;
       box-shadow:none!important;border:none!important;border-radius:0!important;
       font-size:12.5px!important;line-height:1.5!important}
     #resume section{margin-top:18px!important;margin-bottom:0!important;
