@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pouline Antony — Full Stack Developer</title>
+<meta name="description" content="Pouline Antony — Full Stack Developer (React, Node.js, NestJS, Symfony). Multi-template résumé." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@500;600;700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,800&family=Newsreader:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  /* ============ BASE / CHROME (shared, never printed) ============ */
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{font-family:"Hanken Grotesk",system-ui,sans-serif;background:#1a1a1d;color:#111}
+
+  .toolbar{
+    position:sticky;top:0;z-index:50;
+    display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+    padding:12px 22px;background:#111114;color:#fafafa;
+    border-bottom:1px solid #2a2a2e;
+  }
+  .toolbar .brand{font-family:"Archivo",sans-serif;font-weight:800;letter-spacing:.16em;font-size:12px;text-transform:uppercase;opacity:.85}
+  .toolbar .spacer{flex:1}
+  .field{display:flex;align-items:center;gap:9px}
+  .field label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;opacity:.6}
+  .sel{position:relative}
+  .sel select{
+    appearance:none;-webkit-appearance:none;
+    font-family:"Archivo",sans-serif;font-weight:600;font-size:13px;letter-spacing:.02em;
+    background:#202024;color:#fafafa;border:1px solid #34343a;border-radius:8px;
+    padding:8px 34px 8px 13px;cursor:pointer;transition:border-color .15s;
+  }
+  .sel select:hover{border-color:#55555f}
+  .sel::after{content:"";position:absolute;right:13px;top:50%;width:7px;height:7px;border-right:2px solid #9a9aa2;border-bottom:2px solid #9a9aa2;transform:translateY(-65%) rotate(45deg);pointer-events:none}
+  .btn{
+    font-family:"Archivo",sans-serif;font-weight:700;font-size:12px;letter-spacing:.05em;
+    background:#fafafa;color:#111;border:none;border-radius:8px;cursor:pointer;
+    padding:9px 16px;display:inline-flex;align-items:center;gap:8px;transition:.15s;
+  }
+  .btn:hover{background:#e2231a;color:#fff}
+  .btn svg{width:15px;height:15px}
+
+  .stage{padding:40px 20px 90px}
+  @media (max-width:680px){.stage{padding:18px 0 80px}}
+
+  @media (prefers-reduced-motion:no-preference){
+    #resume > *{opacity:0;transform:translateY(12px);animation:rise .6s cubic-bezier(.2,.7,.2,1) forwards}
+    @keyframes rise{to{opacity:1;transform:none}}
+  }
+
+  @media print{
+    .toolbar{display:none!important}
+    .stage{padding:0!important;background:#fff!important}
+    body{background:#fff}
+    #resume > *{opacity:1!important;transform:none!important;animation:none!important}
+  }
+</style>
+<style id="theme"></style>
+</head>
+<body>
+
+  <div class="toolbar">
+    <span class="brand">Résumé</span>
+    <div class="spacer"></div>
+    <div class="field">
+      <label for="tpl">Template</label>
+      <div class="sel">
+        <select id="tpl">
+          <option value="swiss">Swiss — Editorial</option>
+          <option value="onyx">Onyx — Sidebar</option>
+          <option value="ledger">Ledger — Serif</option>
+          <option value="terminal">Terminal — Mono</option>
+          <option value="coral">Coral — Gradient</option>
+          <option value="slate">Slate — Timeline</option>
+          <option value="noir">Noir — Dark Gold</option>
+          <option value="plain">Plain — ATS-safe</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn" id="print" aria-label="Print or save as PDF">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      Print / PDF
+    </button>
+  </div>
+
+  <div class="stage"><article id="resume"></article></div>
+
+<script>
+/* ===================== SINGLE SOURCE OF TRUTH ===================== */
+const RESUME = {
+  name:"Pouline Antony",
+  location:"Puducherry, India",
+  phone:"+91 93613 55717",
+  email:"poulineantony5@gmail.com",
+  summary:"Full Stack Developer with 2+ years of professional experience building web and mobile applications using React, React Native, Node.js, Express.js, NestJS, and Symfony. Experienced in developing scalable backend services, enterprise platforms, fintech solutions, healthcare systems, and mobile applications. Strong expertise in database design, third-party integrations, API development, Docker deployments, and production support. Passionate about delivering reliable, user-focused solutions from concept to deployment.",
+  skills:[
+    ["Frontend","React.js, React Native, JavaScript, TypeScript, HTML5, CSS3"],
+    ["Backend","Node.js, Express.js, NestJS, Symfony"],
+    ["Databases","MySQL, PostgreSQL, MongoDB"],
+    ["DevOps & Infra","Docker, Linux (Basic Administration), Windows Server, Application Deployment, Environment Configuration"],
+    ["Tools & Services","Redis, Kafka, Stripe, Razorpay, Twilio, Onfido, ViaLink, Braze, Cloudflare, AWS S3, Git, REST APIs"]
+  ],
+  aiIntro:"Experienced in leveraging Artificial Intelligence tools to improve software development productivity, code quality, debugging, documentation, and application design.",
+  aiTools:["ChatGPT","Claude AI","GitHub Copilot","Gemini","Cursor AI","Bolt AI","Windsurf","Lovable AI"],
+  aiGroups:[
+    ["AI in Software Development",[
+      "Generate and optimize frontend and backend code using AI-assisted development tools.",
+      "Create API structures, database schemas, and application architectures with AI support.",
+      "Debug complex issues and analyze production errors using AI-powered workflows.",
+      "Generate technical documentation, implementation plans, and development roadmaps.",
+      "Accelerate feature development through AI-assisted code generation and refactoring.",
+      "Perform code reviews and identify security, performance, and maintainability improvements.",
+      "Create database queries, migrations, and optimization strategies using AI tools.",
+      "Generate unit tests, integration tests, and validation scenarios.",
+      "Use AI for requirement analysis and converting business requirements into technical specifications."
+    ]],
+    ["AI Application Development Knowledge",[
+      "Building AI-powered features and integrations into web and mobile applications.",
+      "Working with AI APIs and Large Language Models (LLMs).",
+      "Designing AI-assisted workflows for automation and productivity enhancement.",
+      "Creating AI-enabled chat interfaces and assistant-based user experiences.",
+      "Integrating AI services into existing enterprise applications.",
+      "Using prompt engineering techniques to improve AI-generated outputs.",
+      "Understanding Retrieval-Augmented Generation (RAG) concepts and AI agent workflows."
+    ]],
+    ["Productivity & Development Workflow",[
+      "Accelerate development lifecycle using AI-assisted planning, coding, testing, and deployment.",
+      "Reduce development time through intelligent code suggestions and automated documentation.",
+      "Improve application quality through AI-assisted debugging and performance analysis."
+    ]]
+  ],
+  experience:[{
+    role:"Full Stack Developer", when:"January 2024 — Present",
+    org:"Keprevos Enterprise Business Solutions",
+    points:[
+      "Developed and maintained full-stack applications using React, Node.js, Express.js, NestJS, Symfony, and modern database technologies.",
+      "Built scalable REST APIs and business workflows for enterprise, healthcare, fintech, and service management platforms.",
+      "Integrated third-party services including Stripe, Razorpay, Twilio, Onfido, ViaLink, Braze, Redis, Kafka, Cloudflare, and AWS S3.",
+      "Designed and optimized MySQL, PostgreSQL, and MongoDB database structures for high-performance applications.",
+      "Developed both front-office and back-office solutions with role-based access control and workflow automation.",
+      "Investigated and resolved production issues across frontend, backend, and database systems.",
+      "Performed application deployments, Docker environment management, and server maintenance.",
+      "Collaborated directly with clients and internal teams to gather requirements and deliver business-critical features.",
+      "Participated in architecture discussions, code reviews, testing, and release management activities."
+    ]
+  }],
+  projects:[
+    {name:"UPCAB", stack:"NestJS · PostgreSQL", desc:"Ride-booking platform connecting drivers and riders.", points:[
+      "Developed backend APIs and business logic using NestJS.",
+      "Implemented booking workflows, ride management, and user management modules.",
+      "Integrated multiple third-party services for communication, verification, and operational processes.",
+      "Optimized PostgreSQL database queries and application performance."]},
+    {name:"Fiducial Banque V2", stack:"React.js · Express.js · MySQL", desc:"Enterprise banking and card subscription management platform.", points:[
+      "Developed front-office and back-office features for banking workflows.",
+      "Implemented customer onboarding and card subscription processes.",
+      "Built administrative dashboards, dynamic forms, and workflow management modules.",
+      "Contributed to UI modernization and platform enhancements.",
+      "Participated in requirement analysis, development, testing, and deployment activities."]},
+    {name:"LocalFix", stack:"React Native · Node.js · Express.js · PostgreSQL · Docker", desc:"A mobile platform connecting customers with local service providers through an easy-to-use booking experience.", points:[
+      "Independently developed and maintained the mobile application using React Native.",
+      "Designed and implemented mobile user interfaces for customer onboarding, service browsing, booking, and profile management.",
+      "Integrated backend APIs and business workflows to support service requests and user interactions.",
+      "Worked on authentication, data management, and application performance optimization.",
+      "Participated in testing, debugging, deployment, and ongoing platform improvements."]},
+    {name:"TherapuTime", stack:"Express.js · MongoDB", desc:"Healthcare appointment and patient management platform.", points:[
+      "Developed backend services and APIs for doctor and patient management.",
+      "Implemented appointment scheduling and healthcare workflow modules.",
+      "Designed database schemas and optimized application performance.",
+      "Managed authentication and role-based access functionality."]}
+  ],
+  education:[{deg:"Bachelor of Science in Computer Science (B.Sc. CS)", school:"Don Bosco Arts and Science College", meta:"Pondicherry University · 2023"}]
+};
+
+/* ===================== HELPERS ===================== */
+const e = s => String(s).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+const li = (arr) => `<ul>${arr.map(x=>`<li>${e(x)}</li>`).join("")}</ul>`;
+const R = RESUME;
+const tel = p => p.replace(/\s/g,"");
+
+/* ===================== TEMPLATES ===================== */
+const T = {};
+
+/* ---------- 1. SWISS — editorial ---------- */
+T.swiss = {
+  label:"Swiss",
+  css:`
+  .stage{background:#f4f2ec}
+  #resume{max-width:840px;margin:0 auto;background:#fff;padding:60px 60px 68px;
+    box-shadow:0 40px 80px -40px rgba(0,0,0,.28);border-top:6px solid #121212;
+    font-family:"Hanken Grotesk",sans-serif;color:#121212;line-height:1.55}
+  #resume h1{font-family:"Anton",sans-serif;font-size:clamp(40px,8vw,72px);line-height:.92;text-transform:uppercase;letter-spacing:.01em}
+  #resume .contact{margin-top:13px;display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px;color:#6b6b66;letter-spacing:.04em;border-bottom:3px solid #121212;padding-bottom:20px}
+  #resume .contact a{color:#6b6b66;text-decoration:none}#resume .contact a:hover{color:#e2231a}
+  #resume .contact .d{color:#e2231a}
+  #resume section{margin-top:34px}
+  #resume .sh{display:flex;align-items:baseline;gap:13px;border-bottom:3px solid #121212;padding-bottom:8px;margin-bottom:16px}
+  #resume .sh .n{font-family:"Archivo";font-weight:700;font-size:12px;color:#e2231a;letter-spacing:.08em}
+  #resume .sh h2{font-family:"Archivo";font-weight:800;font-size:clamp(15px,2.2vw,20px);text-transform:uppercase;letter-spacing:.06em}
+  #resume p{font-size:14.5px;color:#2a2a28}
+  #resume dl{display:grid;grid-template-columns:160px 1fr;gap:5px 22px}
+  #resume dt{font-family:"Archivo";font-weight:700;font-size:13px}
+  #resume dd{font-size:14px;color:#2a2a28}
+  #resume .role{font-family:"Archivo";font-weight:800;font-size:16.5px}
+  #resume .org{font-family:"Archivo";font-weight:600;font-size:13.5px;color:#3a3a37;margin-top:2px}
+  #resume .when{font-size:12.5px;color:#6b6b66;letter-spacing:.04em;white-space:nowrap}
+  #resume .top{display:flex;justify-content:space-between;align-items:baseline;gap:14px;flex-wrap:wrap}
+  #resume .pn{font-family:"Archivo";font-weight:800;font-size:15.5px}
+  #resume .st{font-size:12px;color:#e2231a;font-weight:600;margin-left:8px}
+  #resume .desc{font-size:13.5px;color:#3a3a37;margin-top:3px}
+  #resume ul{list-style:none;margin-top:7px}
+  #resume li{position:relative;padding-left:17px;font-size:13.5px;color:#2a2a28;margin-bottom:5px}
+  #resume li::before{content:"";position:absolute;left:0;top:.6em;width:6px;height:6px;background:#121212}
+  #resume .entry{margin-top:18px}#resume .entry:first-of-type{margin-top:0}
+  #resume .mini{font-family:"Archivo";font-weight:700;font-size:13px;letter-spacing:.03em;margin-top:14px;text-transform:uppercase}
+  @media(max-width:680px){#resume{padding:32px 22px}#resume dl{grid-template-columns:1fr;gap:0}#resume dt{margin-top:8px}}
+  @media print{#resume{max-width:none;box-shadow:none;border-top:none;padding:0}#resume section{break-inside:avoid}#resume .entry{break-inside:avoid}}
+  `,
+  html(d){
+    const sec=(n,t,body)=>`<section><div class="sh"><span class="n">${n}</span><h2>${t}</h2></div>${body}</section>`;
+    const ai = `<p style="margin-bottom:10px"><strong>AI-Assisted Software Development.</strong> ${e(d.aiIntro)}</p>
+      <dl><dt>AI Tools</dt><dd>${d.aiTools.map(e).join(", ")}</dd></dl>
+      ${d.aiGroups.map(g=>`<p class="mini">${e(g[0])}</p>${li(g[1])}`).join("")}`;
+    return `
+    <header>
+      <h1>${e(d.name)}</h1>
+      <div class="contact"><span>${e(d.location)}</span><span class="d">/</span>
+        <a href="tel:${tel(d.phone)}">${e(d.phone)}</a><span class="d">/</span>
+        <a href="mailto:${d.email}">${e(d.email)}</a></div>
+    </header>
+    ${sec("01","Professional Summary",`<p>${e(d.summary)}</p>`)}
+    ${sec("02","Technical Skills",`<dl>${d.skills.map(s=>`<dt>${e(s[0])}</dt><dd>${e(s[1])}</dd>`).join("")}</dl>`)}
+    ${sec("03","Artificial Intelligence &amp; AI Tools",ai)}
+    ${sec("04","Professional Experience",d.experience.map(x=>`<div class="entry"><div class="top"><span class="role">${e(x.role)}</span><span class="when">${e(x.when)}</span></div><div class="org">${e(x.org)}</div>${li(x.points)}</div>`).join(""))}
+    ${sec("05","Projects",d.projects.map(p=>`<div class="entry"><div><span class="pn">${e(p.name)}</span><span class="st">${e(p.stack)}</span></div><div class="desc">${e(p.desc)}</div>${li(p.points)}</div>`).join(""))}
+    ${sec("06","Education",d.education.map(ed=>`<div class="entry"><div class="role" style="font-size:15px">${e(ed.deg)}</div><div class="org">${e(ed.school)}</div><div class="when">${e(ed.meta)}</div></div>`).join(""))}`;
+  }
+};
+
+/* ---------- 2. ONYX — dark sidebar ---------- */
+T.onyx = {
+  label:"Onyx",
+  css:`
+  .stage{background:#e8e8ea}
+  #resume{max-width:900px;margin:0 auto;display:grid;grid-template-columns:290px 1fr;background:#fff;
+    box-shadow:0 40px 80px -40px rgba(0,0,0,.3);font-family:"Hanken Grotesk",sans-serif;color:#1d1d20;overflow:hidden}
+  #resume .side{background:#16181d;color:#e9e9ec;padding:42px 30px}
+  #resume .side h1{font-family:"Outfit";font-weight:800;font-size:34px;line-height:1.02;letter-spacing:-.01em}
+  #resume .side .tag{display:inline-block;font-family:"Outfit";font-weight:600;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#36d399;margin-top:10px}
+  #resume .side .blk{margin-top:30px}
+  #resume .side .lbl{font-family:"Outfit";font-weight:700;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#7f828c;margin-bottom:11px}
+  #resume .side a,#resume .side .c{color:#cfd0d6;text-decoration:none;font-size:13px;display:block;margin-bottom:6px;word-break:break-word}
+  #resume .side a:hover{color:#36d399}
+  #resume .side .sk b{display:block;font-family:"Outfit";font-weight:600;font-size:12.5px;color:#fff;margin:10px 0 3px}
+  #resume .side .sk span{font-size:12px;color:#aaacb4;line-height:1.45}
+  #resume .chips{display:flex;flex-wrap:wrap;gap:6px}
+  #resume .chip{font-size:11px;background:#23262d;color:#cfd0d6;border:1px solid #2e323b;border-radius:6px;padding:4px 8px}
+  #resume .main{padding:42px 40px}
+  #resume .main section{margin-bottom:26px}
+  #resume .main h2{font-family:"Outfit";font-weight:800;font-size:14px;letter-spacing:.04em;text-transform:uppercase;color:#16181d;display:flex;align-items:center;gap:10px;margin-bottom:12px}
+  #resume .main h2::after{content:"";flex:1;height:2px;background:#e3e3e6}
+  #resume p{font-size:13.5px;color:#3a3a40}
+  #resume .role{font-family:"Outfit";font-weight:700;font-size:15.5px}
+  #resume .org{font-size:13px;color:#36a079;font-weight:600;margin-top:1px}
+  #resume .when{font-size:12px;color:#8a8d96;white-space:nowrap}
+  #resume .top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+  #resume .pn{font-family:"Outfit";font-weight:700;font-size:14.5px}
+  #resume .st{font-size:11.5px;color:#36a079;font-weight:600;margin-left:7px}
+  #resume .desc{font-size:13px;color:#55565d;margin-top:2px}
+  #resume ul{list-style:none;margin-top:6px}
+  #resume li{position:relative;padding-left:16px;font-size:13px;color:#3a3a40;margin-bottom:4px}
+  #resume li::before{content:"";position:absolute;left:0;top:.55em;width:5px;height:5px;border-radius:50%;background:#36d399}
+  #resume .entry{margin-top:15px}#resume .entry:first-of-type{margin-top:0}
+  #resume .mini{font-family:"Outfit";font-weight:700;font-size:12.5px;margin-top:12px;color:#16181d}
+  @media(max-width:720px){#resume{grid-template-columns:1fr}#resume .main{padding:30px 24px}}
+  @media print{#resume{max-width:none;box-shadow:none;grid-template-columns:255px 1fr}#resume .side{background:#16181d!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}#resume section{break-inside:avoid}#resume .entry{break-inside:avoid}}
+  `,
+  html(d){
+    const sk = d.skills.map(s=>`<div class="sk"><b>${e(s[0])}</b><span>${e(s[1])}</span></div>`).join("");
+    const aiBody = `<p style="margin-bottom:8px">${e(d.aiIntro)}</p>${d.aiGroups.map(g=>`<p class="mini">${e(g[0])}</p>${li(g[1])}`).join("")}`;
+    return `
+    <aside class="side">
+      <h1>${e(d.name)}</h1><span class="tag">Full Stack Developer</span>
+      <div class="blk"><div class="lbl">Contact</div>
+        <span class="c">${e(d.location)}</span>
+        <a href="tel:${tel(d.phone)}">${e(d.phone)}</a>
+        <a href="mailto:${d.email}">${e(d.email)}</a></div>
+      <div class="blk"><div class="lbl">Skills</div>${sk}</div>
+      <div class="blk"><div class="lbl">AI Tools</div><div class="chips">${d.aiTools.map(t=>`<span class="chip">${e(t)}</span>`).join("")}</div></div>
+      <div class="blk"><div class="lbl">Education</div>${d.education.map(ed=>`<div class="sk"><b>${e(ed.deg)}</b><span>${e(ed.school)}<br>${e(ed.meta)}</span></div>`).join("")}</div>
+    </aside>
+    <div class="main">
+      <section><h2>Summary</h2><p>${e(d.summary)}</p></section>
+      <section><h2>Experience</h2>${d.experience.map(x=>`<div class="entry"><div class="top"><span class="role">${e(x.role)}</span><span class="when">${e(x.when)}</span></div><div class="org">${e(x.org)}</div>${li(x.points)}</div>`).join("")}</section>
+      <section><h2>Projects</h2>${d.projects.map(p=>`<div class="entry"><div><span class="pn">${e(p.name)}</span><span class="st">${e(p.stack)}</span></div><div class="desc">${e(p.desc)}</div>${li(p.points)}</div>`).join("")}</section>
+      <section><h2>AI-Assisted Development</h2>${aiBody}</section>
+    </div>`;
+  }
+};
+
+/* ---------- 3. LEDGER — classic serif ---------- */
+T.ledger = {
+  label:"Ledger",
+  css:`
+  .stage{background:#efeae0}
+  #resume{max-width:800px;margin:0 auto;background:#fcfbf7;padding:66px 70px 72px;
+    box-shadow:0 40px 80px -40px rgba(0,0,0,.25);font-family:"Newsreader",Georgia,serif;color:#23211c;line-height:1.6}
+  #resume header{text-align:center;border-bottom:1px solid #cfc7b6;padding-bottom:24px}
+  #resume h1{font-family:"Fraunces";font-weight:600;font-size:clamp(34px,6vw,52px);letter-spacing:.005em}
+  #resume .role-line{font-family:"Fraunces";font-style:italic;font-weight:400;font-size:17px;color:#7a2e22;margin-top:4px}
+  #resume .contact{margin-top:12px;font-size:13.5px;color:#6c675c;letter-spacing:.02em}
+  #resume .contact a{color:#6c675c;text-decoration:none}#resume .contact a:hover{color:#7a2e22}
+  #resume section{margin-top:30px}
+  #resume h2{font-family:"Fraunces";font-weight:600;font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:#7a2e22;text-align:center;margin-bottom:4px}
+  #resume h2 + .rule{height:1px;background:#cfc7b6;margin-bottom:16px}
+  #resume p{font-size:15.5px;color:#34312a}
+  #resume dl{display:grid;grid-template-columns:155px 1fr;gap:4px 20px}
+  #resume dt{font-weight:600;font-size:14.5px}
+  #resume dd{font-size:14.5px;color:#46423a}
+  #resume .top{display:flex;justify-content:space-between;align-items:baseline;gap:14px;flex-wrap:wrap}
+  #resume .role{font-family:"Fraunces";font-weight:600;font-size:18px}
+  #resume .org{font-style:italic;font-size:14.5px;color:#6c675c}
+  #resume .when{font-size:13px;color:#8a8576;font-variant-numeric:oldstyle-nums}
+  #resume .pn{font-family:"Fraunces";font-weight:600;font-size:16.5px}
+  #resume .st{font-style:italic;font-size:13px;color:#8a8576;margin-left:8px}
+  #resume .desc{font-size:14.5px;color:#46423a;margin-top:1px}
+  #resume ul{list-style:none;margin-top:6px}
+  #resume li{position:relative;padding-left:18px;font-size:14.5px;color:#34312a;margin-bottom:4px}
+  #resume li::before{content:"—";position:absolute;left:0;color:#b09a6f}
+  #resume .entry{margin-top:16px}#resume .entry:first-of-type{margin-top:0}
+  #resume .mini{font-family:"Fraunces";font-weight:600;font-style:italic;font-size:14.5px;margin-top:12px;color:#5a564c}
+  @media(max-width:680px){#resume{padding:36px 26px}#resume dl{grid-template-columns:1fr;gap:0}#resume dt{margin-top:8px}}
+  @media print{#resume{max-width:none;box-shadow:none;padding:0;background:#fff}#resume section{break-inside:avoid}#resume .entry{break-inside:avoid}}
+  `,
+  html(d){
+    const sec=(t,body)=>`<section><h2>${t}</h2><div class="rule"></div>${body}</section>`;
+    const ai=`<p style="margin-bottom:10px">${e(d.aiIntro)}</p><dl><dt>AI Tools</dt><dd>${d.aiTools.map(e).join(", ")}</dd></dl>${d.aiGroups.map(g=>`<p class="mini">${e(g[0])}</p>${li(g[1])}`).join("")}`;
+    return `
+    <header><h1>${e(d.name)}</h1><div class="role-line">Full Stack Developer</div>
+      <div class="contact">${e(d.location)} &nbsp;·&nbsp; <a href="tel:${tel(d.phone)}">${e(d.phone)}</a> &nbsp;·&nbsp; <a href="mailto:${d.email}">${e(d.email)}</a></div></header>
+    ${sec("Professional Summary",`<p>${e(d.summary)}</p>`)}
+    ${sec("Technical Skills",`<dl>${d.skills.map(s=>`<dt>${e(s[0])}</dt><dd>${e(s[1])}</dd>`).join("")}</dl>`)}
+    ${sec("Artificial Intelligence & AI Tools",ai)}
+    ${sec("Professional Experience",d.experience.map(x=>`<div class="entry"><div class="top"><span class="role">${e(x.role)}</span><span class="when">${e(x.when)}</span></div><div class="org">${e(x.org)}</div>${li(x.points)}</div>`).join(""))}
+    ${sec("Selected Projects",d.projects.map(p=>`<div class="entry"><div><span class="pn">${e(p.name)}</span><span class="st">${e(p.stack)}</span></div><div class="desc">${e(p.desc)}</div>${li(p.points)}</div>`).join(""))}
+    ${sec("Education",d.education.map(ed=>`<div class="entry"><div class="role" style="font-size:16px">${e(ed.deg)}</div><div class="org">${e(ed.school)}</div><div class="when">${e(ed.meta)}</div></div>`).join(""))}`;
+  }
+};
+
+/* ---------- 4. TERMINAL — mono ---------- */
+T.terminal = {
+  label:"Terminal",
+  css:`
+  .stage{background:#0a0c10}
+  #resume{max-width:860px;margin:0 auto;background:#0e1116;color:#c9d1d9;padding:46px 48px 56px;
+    border:1px solid #20262e;border-radius:10px;font-family:"JetBrains Mono",monospace;font-size:13px;line-height:1.62}
+  #resume .winbar{display:flex;gap:7px;margin-bottom:26px}
+  #resume .winbar i{width:11px;height:11px;border-radius:50%;display:inline-block}
+  #resume .winbar i:nth-child(1){background:#ff5f56}#resume .winbar i:nth-child(2){background:#ffbd2e}#resume .winbar i:nth-child(3){background:#27c93f}
+  #resume h1{font-family:"JetBrains Mono";font-weight:700;font-size:clamp(26px,5vw,40px);color:#fff;letter-spacing:-.01em}
+  #resume .who{color:#8b949e;font-size:13px;margin-top:4px}
+  #resume .who .g{color:#3fb950}
+  #resume .contact{margin-top:12px;font-size:12.5px;color:#8b949e;border-bottom:1px dashed #2a313a;padding-bottom:18px;display:flex;flex-wrap:wrap;gap:4px 16px}
+  #resume .contact a{color:#58a6ff;text-decoration:none}#resume .contact a:hover{text-decoration:underline}
+  #resume section{margin-top:26px}
+  #resume h2{font-weight:700;font-size:13px;color:#3fb950;margin-bottom:11px}
+  #resume h2::before{content:"// ";color:#6e7681}
+  #resume p{font-size:12.5px;color:#adbac7}
+  #resume dl{display:grid;grid-template-columns:150px 1fr;gap:4px 16px}
+  #resume dt{color:#d2a8ff;font-size:12.5px}#resume dt::before{content:"\\203A "}
+  #resume dd{font-size:12.5px;color:#adbac7}
+  #resume .top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+  #resume .role{font-weight:700;font-size:14px;color:#fff}
+  #resume .org{font-size:12.5px;color:#3fb950}#resume .org::before{content:"@ ";color:#6e7681}
+  #resume .when{font-size:12px;color:#6e7681}
+  #resume .pn{font-weight:700;font-size:13.5px;color:#fff}
+  #resume .st{font-size:11.5px;color:#d2a8ff;margin-left:8px}
+  #resume .desc{font-size:12px;color:#8b949e;margin-top:2px}
+  #resume ul{list-style:none;margin-top:6px}
+  #resume li{position:relative;padding-left:18px;font-size:12.5px;color:#adbac7;margin-bottom:4px}
+  #resume li::before{content:"\\203A";position:absolute;left:2px;color:#3fb950}
+  #resume .entry{margin-top:15px}#resume .entry:first-of-type{margin-top:0}
+  #resume .mini{font-weight:700;font-size:12.5px;margin-top:12px;color:#ffa657}#resume .mini::before{content:"# ";color:#6e7681}
+  #resume .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+  #resume .chip{font-size:11px;color:#79c0ff;border:1px solid #21364d;background:#0d2136;border-radius:5px;padding:3px 8px}
+  @media(max-width:680px){#resume{padding:30px 22px}#resume dl{grid-template-columns:1fr;gap:0}#resume dt{margin-top:8px}}
+  @media print{
+    .stage{background:#fff}
+    #resume{max-width:none;border:none;border-radius:0;padding:0;background:#fff;color:#111}
+    #resume .winbar{display:none}#resume h1,#resume .role,#resume .pn{color:#000}
+    #resume h2{color:#0b6b2e}#resume p,#resume dd,#resume li{color:#222}
+    #resume .contact{border-color:#bbb}#resume a{color:#0a58ca}
+    #resume li::before,#resume .org{color:#0b6b2e}#resume dt{color:#6f42c1}
+    #resume .chip{color:#0a58ca;background:#fff;border-color:#bbb}
+    #resume section{break-inside:avoid}#resume .entry{break-inside:avoid}
+  }
+  `,
+  html(d){
+    const ai=`<p style="margin-bottom:8px">${e(d.aiIntro)}</p><div class="chips">${d.aiTools.map(t=>`<span class="chip">${e(t)}</span>`).join("")}</div>${d.aiGroups.map(g=>`<p class="mini">${e(g[0])}</p>${li(g[1])}`).join("")}`;
+    return `
+    <div class="winbar"><i></i><i></i><i></i></div>
+    <header>
+      <h1>${e(d.name)}</h1>
+      <div class="who"><span class="g">~/</span>full-stack-developer <span class="g">$</span> whoami</div>
+      <div class="contact"><span>${e(d.location)}</span><a href="tel:${tel(d.phone)}">${e(d.phone)}</a><a href="mailto:${d.email}">${e(d.email)}</a></div>
+    </header>
+    <section><h2>summary</h2><p>${e(d.summary)}</p></section>
+    <section><h2>tech_stack</h2><dl>${d.skills.map(s=>`<dt>${e(s[0])}</dt><dd>${e(s[1])}</dd>`).join("")}</dl></section>
+    <section><h2>ai_and_tooling</h2>${ai}</section>
+    <section><h2>experience</h2>${d.experience.map(x=>`<div class="entry"><div class="top"><span class="role">${e(x.role)}</span><span class="when">${e(x.when)}</span></div><div class="org">${e(x.org)}</div>${li(x.points)}</div>`).join("")}</section>
+    <section><h2>projects</h2>${d.projects.map(p=>`<div class="entry"><div><span class="pn">${e(p.name)}</span><span class="st">${e(p.stack)}</span></div><div class="desc">${e(p.desc)}</div>${li(p.points)}</div>`).join("")}</section>
+    <section><h2>education</h2>${d.education.map(ed=>`<div class="entry"><div class="role" style="font-size:13px">${e(ed.deg)}</div><div class="org">${e(ed.school)}</div><div class="when">${e(ed.meta)}</div></div>`).join("")}</section>`;
+  }
+};
+
+/* ---------- 5. CORAL — warm gradient header ---------- */
+T.coral = {
+  label:"Coral",
+  css:`
+  .stage{background:#f3f1ee}
+  #resume{max-width:850px;margin:0 auto;background:#fff;border-radius:16px;overflow:hidden;
+    box-shadow:0 40px 80px -40px rgba(0,0,0,.28);font-family:"Sora",sans-serif;color:#1f2430;line-height:1.55}
+  #resume .band{background:linear-gradient(120deg,#fb7185,#f59e0b);color:#fff;padding:44px 48px 34px}
+  #resume .band h1{font-family:"Sora";font-weight:800;font-size:clamp(34px,6vw,52px);letter-spacing:-.015em;line-height:1.02}
+  #resume .band .role-line{font-weight:600;font-size:15px;margin-top:7px;letter-spacing:.02em}
+  #resume .band .contact{margin-top:15px;display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px}
+  #resume .band .contact a{color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.45)}
+  #resume .body{padding:34px 48px 46px}
+  #resume section{margin-top:26px}
+  #resume h2{font-family:"Sora";font-weight:700;font-size:13.5px;text-transform:uppercase;letter-spacing:.08em;color:#e2533b;display:flex;align-items:center;gap:11px;margin-bottom:13px}
+  #resume h2::before{content:"";width:18px;height:3px;border-radius:2px;background:#f59e0b}
+  #resume p{font-size:14px;color:#3a4150}
+  #resume dl{display:grid;grid-template-columns:155px 1fr;gap:5px 20px}
+  #resume dt{font-weight:700;font-size:13px}
+  #resume dd{font-size:13.5px;color:#3a4150}
+  #resume .top{display:flex;justify-content:space-between;align-items:baseline;gap:14px;flex-wrap:wrap}
+  #resume .role{font-weight:700;font-size:15.5px}
+  #resume .org{font-weight:600;font-size:13px;color:#e2533b;margin-top:1px}
+  #resume .when{font-size:12.5px;color:#8a8f9c}
+  #resume .pn{font-weight:700;font-size:14.5px}
+  #resume .st{font-size:11.5px;color:#e2533b;font-weight:600;margin-left:8px}
+  #resume .desc{font-size:13px;color:#6a7080;margin-top:2px}
+  #resume ul{list-style:none;margin-top:6px}
+  #resume li{position:relative;padding-left:17px;font-size:13.5px;color:#3a4150;margin-bottom:4px}
+  #resume li::before{content:"";position:absolute;left:0;top:.55em;width:6px;height:6px;border-radius:50%;background:#f59e0b}
+  #resume .entry{margin-top:15px}#resume .entry:first-of-type{margin-top:0}
+  #resume .mini{font-family:"Sora";font-weight:700;font-size:12.5px;margin-top:12px}
+  #resume .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+  #resume .chip{font-size:11.5px;background:#fff3ec;color:#c2410c;border:1px solid #fcd9c4;border-radius:20px;padding:4px 11px;font-weight:600}
+  @media(max-width:680px){#resume .band,#resume .body{padding-left:24px;padding-right:24px}#resume dl{grid-template-columns:1fr;gap:0}#resume dt{margin-top:8px}}
+  @media print{#resume{max-width:none;border-radius:0;box-shadow:none}#resume .band{-webkit-print-color-adjust:exact;print-color-adjust:exact}#resume section{break-inside:avoid}#resume .entry{break-inside:avoid}}
+  `,
+  html(d){
+    const sec=(t,body)=>`<section><h2>${t}</h2>${body}</section>`;
+    const ai=`<p style="margin-bottom:10px">${e(d.aiIntro)}</p><div class="chips">${d.aiTools.map(t=>`<span class="chip">${e(t)}</span>`).join("")}</div>${d.aiGroups.map(g=>`<p class="mini">${e(g[0])}</p>${li(g[1])}`).join("")}`;
+    return `
+    <div class="band"><h1>${e(d.name)}</h1><div class="role-line">Full Stack Developer</div>
+      <div class="contact"><span>${e(d.location)}</span><a href="tel:${tel(d.phone)}">${e(d.phone)}</a><a href="mailto:${d.email}">${e(d.email)}</a></div></div>
+    <div class="body">
+      ${sec("Summary",`<p>${e(d.summary)}</p>`)}
+      ${sec("Technical Skills",`<dl>${d.skills.map(s=>`<dt>${e(s[0])}</dt><dd>${e(s[1])}</dd>`).join("")}</dl>`)}
+      ${sec("AI &amp; Tools",ai)}
+      ${sec("Experience",d.experience.map(x=>`<div class="entry"><div class="top"><span class="role">${e(x.role)}</span><span class="when">${e(x.when)}</span></div><div class="org">${e(x.org)}</div>${li(x.points)}</div>`).join(""))}
+      ${sec("Projects",d.projects.map(p=>`<div class="entry"><div><span class="pn">${e(p.name)}</span><span class="st">${e(p.stack)}</span></div><div class="desc">${e(p.desc)}</div>${li(p.points)}</div>`).join(""))}
+      ${sec("Education",d.education.map(ed=>`<div class="entry"><div class="role" style="font-size:14.5px">${e(ed.deg)}</div><div class="org" style="color:#6a7080">${e(ed.school)} · ${e(ed.meta)}</div></div>`).join(""))}
+    </div>`;
+  }
+};
+
+/* ---------- 6. SLATE — timeline ---------- */
+T.slate = {
+  label:"Slate",
+  css:`
+  .stage{background:#eceef1}
+  #resume{max-width:840px;margin:0 auto;background:#fff;padding:52px 56px 60px;
+    box-shadow:0 40px 80px -40px rgba(0,0,0,.26);font-family:"Outfit",sans-serif;color:#1c2230;line-height:1.55}
+  #resume header{padding-bottom:18px;border-bottom:2px solid #e3e6eb}
+  #resume h1{font-family:"Outfit";font-weight:800;font-size:clamp(34px,6vw,50px);letter-spacing:-.01em}
+  #resume .role-line{font-weight:600;font-size:14px;color:#2563eb;margin-top:4px;letter-spacing:.03em;text-transform:uppercase}
+  #resume .contact{margin-top:11px;display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px;color:#6b7280}
+  #resume .contact a{color:#6b7280;text-decoration:none}#resume .contact a:hover{color:#2563eb}
+  #resume section{margin-top:28px}
+  #resume h2{font-family:"Outfit";font-weight:800;font-size:13px;text-transform:uppercase;letter-spacing:.07em;color:#1c2230;margin-bottom:14px;position:relative;padding-left:14px}
+  #resume h2::before{content:"";position:absolute;left:0;top:1px;bottom:1px;width:4px;border-radius:2px;background:#2563eb}
+  #resume p{font-size:14px;color:#3f4654}
+  #resume dl{display:grid;grid-template-columns:155px 1fr;gap:5px 20px}
+  #resume dt{font-weight:700;font-size:13px}#resume dd{font-size:13.5px;color:#3f4654}
+  #resume .tl{border-left:2px solid #dfe3e9;padding-left:24px;margin-left:5px}
+  #resume .tl .entry{position:relative;margin-top:18px}#resume .tl .entry:first-child{margin-top:0}
+  #resume .tl .entry::before{content:"";position:absolute;left:-31px;top:4px;width:11px;height:11px;border-radius:50%;background:#2563eb;box-shadow:0 0 0 3px #fff,0 0 0 5px #dfe3e9}
+  #resume .top{display:flex;justify-content:space-between;align-items:baseline;gap:14px;flex-wrap:wrap}
+  #resume .role{font-family:"Outfit";font-weight:700;font-size:15.5px}
+  #resume .org{font-weight:600;font-size:13px;color:#2563eb;margin-top:1px}
+  #resume .when{font-size:12.5px;color:#9097a3}
+  #resume .pn{font-family:"Outfit";font-weight:700;font-size:14.5px}
+  #resume .st{font-size:11.5px;color:#2563eb;font-weight:600;margin-left:8px}
+  #resume .desc{font-size:13px;color:#6b7280;margin-top:2px}
+  #resume ul{list-style:none;margin-top:6px}
+  #resume li{position:relative;padding-left:16px;font-size:13.5px;color:#3f4654;margin-bottom:4px}
+  #resume li::before{content:"";position:absolute;left:0;top:.55em;width:5px;height:5px;border-radius:1px;background:#94a3b8}
+  #resume .mini{font-family:"Outfit";font-weight:700;font-size:12.5px;margin-top:12px}
+  #resume .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+  #resume .chip{font-size:11.5px;background:#eef4ff;color:#1d4ed8;border:1px solid #d4e2ff;border-radius:6px;padding:4px 9px;font-weight:600}
+  @media(max-width:680px){#resume{padding:34px 24px}#resume dl{grid-template-columns:1fr;gap:0}#resume dt{margin-top:8px}}
+  @media print{#resume{max-width:none;box-shadow:none;padding:0}#resume section{break-inside:avoid}#resume .tl .entry{break-inside:avoid}}
+  `,
+  html(d){
+    const sec=(t,body)=>`<section><h2>${t}</h2>${body}</section>`;
+    const expEntry=x=>`<div class="entry"><div class="top"><span class="role">${e(x.role)}</span><span class="when">${e(x.when)}</span></div><div class="org">${e(x.org)}</div>${li(x.points)}</div>`;
+    const projEntry=p=>`<div class="entry"><div><span class="pn">${e(p.name)}</span><span class="st">${e(p.stack)}</span></div><div class="desc">${e(p.desc)}</div>${li(p.points)}</div>`;
+    const ai=`<p style="margin-bottom:8px">${e(d.aiIntro)}</p><div class="chips">${d.aiTools.map(t=>`<span class="chip">${e(t)}</span>`).join("")}</div>${d.aiGroups.map(g=>`<p class="mini">${e(g[0])}</p>${li(g[1])}`).join("")}`;
+    return `
+    <header><h1>${e(d.name)}</h1><div class="role-line">Full Stack Developer</div>
+      <div class="contact"><span>${e(d.location)}</span><a href="tel:${tel(d.phone)}">${e(d.phone)}</a><a href="mailto:${d.email}">${e(d.email)}</a></div></header>
+    ${sec("Summary",`<p>${e(d.summary)}</p>`)}
+    ${sec("Technical Skills",`<dl>${d.skills.map(s=>`<dt>${e(s[0])}</dt><dd>${e(s[1])}</dd>`).join("")}</dl>`)}
+    ${sec("AI &amp; Tools",ai)}
+    ${sec("Experience",`<div class="tl">${d.experience.map(expEntry).join("")}</div>`)}
+    ${sec("Projects",`<div class="tl">${d.projects.map(projEntry).join("")}</div>`)}
+    ${sec("Education",d.education.map(ed=>`<div class="entry"><div class="role" style="font-size:14.5px">${e(ed.deg)}</div><div class="org" style="color:#6b7280">${e(ed.school)} · ${e(ed.meta)}</div></div>`).join(""))}`;
+  }
+};
+
+/* ---------- 7. NOIR — dark elegant gold ---------- */
+T.noir = {
+  label:"Noir",
+  css:`
+  .stage{background:#0c0c0e}
+  #resume{max-width:820px;margin:0 auto;background:#121214;color:#e8e4da;padding:60px 62px 66px;
+    border:1px solid #26262b;font-family:"Newsreader",Georgia,serif;line-height:1.62}
+  #resume header{text-align:center;border-bottom:1px solid #2e2a22;padding-bottom:24px}
+  #resume h1{font-family:"Fraunces";font-weight:600;font-size:clamp(36px,6vw,54px);color:#f3eee3;letter-spacing:.01em}
+  #resume .role-line{font-family:"Fraunces";font-style:italic;font-weight:400;color:#c9a24b;font-size:17px;margin-top:5px}
+  #resume .contact{margin-top:12px;font-size:13.5px;color:#9a958a}
+  #resume .contact a{color:#c9a24b;text-decoration:none}#resume .contact a:hover{text-decoration:underline}
+  #resume section{margin-top:28px}
+  #resume h2{font-family:"Fraunces";font-weight:600;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:#c9a24b;text-align:center;margin-bottom:4px}
+  #resume h2 + .rule{height:1px;background:#2e2a22;margin-bottom:16px}
+  #resume p{font-size:15px;color:#cfcabf}
+  #resume dl{display:grid;grid-template-columns:155px 1fr;gap:4px 20px}
+  #resume dt{font-weight:600;font-size:14.5px;color:#e8e4da}#resume dd{font-size:14.5px;color:#b9b4a8}
+  #resume .top{display:flex;justify-content:space-between;align-items:baseline;gap:14px;flex-wrap:wrap}
+  #resume .role{font-family:"Fraunces";font-weight:600;font-size:18px;color:#f3eee3}
+  #resume .org{font-style:italic;font-size:14.5px;color:#9a958a}
+  #resume .when{font-size:13px;color:#7d786c}
+  #resume .pn{font-family:"Fraunces";font-weight:600;font-size:16.5px;color:#f3eee3}
+  #resume .st{font-style:italic;font-size:13px;color:#c9a24b;margin-left:8px}
+  #resume .desc{font-size:14.5px;color:#b9b4a8;margin-top:1px}
+  #resume ul{list-style:none;margin-top:6px}
+  #resume li{position:relative;padding-left:18px;font-size:14.5px;color:#cfcabf;margin-bottom:4px}
+  #resume li::before{content:"—";position:absolute;left:0;color:#c9a24b}
+  #resume .entry{margin-top:16px}#resume .entry:first-of-type{margin-top:0}
+  #resume .mini{font-family:"Fraunces";font-weight:600;font-style:italic;font-size:14.5px;margin-top:12px;color:#b9b4a8}
+  @media(max-width:680px){#resume{padding:36px 26px}#resume dl{grid-template-columns:1fr;gap:0}#resume dt{margin-top:8px}}
+  @media print{
+    .stage{background:#fff}
+    #resume{max-width:none;border:none;padding:0;background:#fff;color:#1a1a1a}
+    #resume h1,#resume .role,#resume .pn{color:#111}
+    #resume .role-line,#resume h2,#resume .st,#resume li::before{color:#8a6d1f}
+    #resume p,#resume dd,#resume li,#resume .desc{color:#2a2a2a}#resume dt{color:#111}
+    #resume header{border-color:#ccc}#resume h2 + .rule{background:#ccc}
+    #resume a{color:#8a6d1f}#resume .org,#resume .when,#resume .contact{color:#555}
+    #resume section{break-inside:avoid}#resume .entry{break-inside:avoid}
+  }
+  `,
+  html(d){
+    const sec=(t,body)=>`<section><h2>${t}</h2><div class="rule"></div>${body}</section>`;
+    const ai=`<p style="margin-bottom:10px">${e(d.aiIntro)}</p><dl><dt>AI Tools</dt><dd>${d.aiTools.map(e).join(", ")}</dd></dl>${d.aiGroups.map(g=>`<p class="mini">${e(g[0])}</p>${li(g[1])}`).join("")}`;
+    return `
+    <header><h1>${e(d.name)}</h1><div class="role-line">Full Stack Developer</div>
+      <div class="contact">${e(d.location)} &nbsp;·&nbsp; <a href="tel:${tel(d.phone)}">${e(d.phone)}</a> &nbsp;·&nbsp; <a href="mailto:${d.email}">${e(d.email)}</a></div></header>
+    ${sec("Professional Summary",`<p>${e(d.summary)}</p>`)}
+    ${sec("Technical Skills",`<dl>${d.skills.map(s=>`<dt>${e(s[0])}</dt><dd>${e(s[1])}</dd>`).join("")}</dl>`)}
+    ${sec("Artificial Intelligence & AI Tools",ai)}
+    ${sec("Professional Experience",d.experience.map(x=>`<div class="entry"><div class="top"><span class="role">${e(x.role)}</span><span class="when">${e(x.when)}</span></div><div class="org">${e(x.org)}</div>${li(x.points)}</div>`).join(""))}
+    ${sec("Selected Projects",d.projects.map(p=>`<div class="entry"><div><span class="pn">${e(p.name)}</span><span class="st">${e(p.stack)}</span></div><div class="desc">${e(p.desc)}</div>${li(p.points)}</div>`).join(""))}
+    ${sec("Education",d.education.map(ed=>`<div class="entry"><div class="role" style="font-size:16px">${e(ed.deg)}</div><div class="org">${e(ed.school)}</div><div class="when">${e(ed.meta)}</div></div>`).join(""))}`;
+  }
+};
+
+/* ---------- 8. PLAIN — ATS-safe, single column ---------- */
+T.plain = {
+  label:"Plain",
+  css:`
+  .stage{background:#dcdcde}
+  #resume{max-width:760px;margin:0 auto;background:#fff;padding:46px 50px 52px;
+    box-shadow:0 20px 50px -30px rgba(0,0,0,.3);font-family:"Hanken Grotesk",Arial,Helvetica,sans-serif;color:#111;line-height:1.5}
+  #resume h1{font-size:27px;font-weight:700;letter-spacing:.01em}
+  #resume .role-line{font-size:14px;font-weight:600;margin-top:2px}
+  #resume .contact{font-size:13px;color:#333;margin-top:5px}
+  #resume .contact a{color:#333;text-decoration:none}
+  #resume section{margin-top:18px}
+  #resume h2{font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid #888;padding-bottom:3px;margin-bottom:9px}
+  #resume p{font-size:13.5px;color:#1a1a1a;margin-bottom:4px}
+  #resume .skill{font-size:13.5px;margin-bottom:3px}
+  #resume .top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+  #resume .role{font-weight:700;font-size:14.5px}
+  #resume .org{font-size:13px;color:#333;font-weight:600}
+  #resume .when{font-size:13px;color:#444}
+  #resume .pn{font-weight:700;font-size:14px}
+  #resume .st{font-size:12.5px;color:#444;margin-left:6px}
+  #resume .desc{font-size:13px;color:#333}
+  #resume ul{margin:5px 0 0 20px;padding:0;list-style:disc}
+  #resume li{font-size:13.5px;color:#1a1a1a;margin-bottom:3px}
+  #resume .entry{margin-top:12px}#resume .entry:first-of-type{margin-top:0}
+  #resume .mini{font-weight:700;font-size:13px;margin-top:9px}
+  @media(max-width:680px){#resume{padding:30px 22px}}
+  @media print{#resume{max-width:none;box-shadow:none;padding:0}#resume section{break-inside:avoid}#resume .entry{break-inside:avoid}}
+  `,
+  html(d){
+    const sec=(t,body)=>`<section><h2>${t}</h2>${body}</section>`;
+    const ai=`<p>${e(d.aiIntro)}</p><p class="skill"><strong>AI Tools:</strong> ${d.aiTools.map(e).join(", ")}</p>${d.aiGroups.map(g=>`<p class="mini">${e(g[0])}</p>${li(g[1])}`).join("")}`;
+    return `
+    <header><h1>${e(d.name)}</h1><div class="role-line">Full Stack Developer</div>
+      <div class="contact">${e(d.location)} | <a href="tel:${tel(d.phone)}">${e(d.phone)}</a> | <a href="mailto:${d.email}">${e(d.email)}</a></div></header>
+    ${sec("Professional Summary",`<p>${e(d.summary)}</p>`)}
+    ${sec("Technical Skills",d.skills.map(s=>`<p class="skill"><strong>${e(s[0])}:</strong> ${e(s[1])}</p>`).join(""))}
+    ${sec("Artificial Intelligence & AI Tools",ai)}
+    ${sec("Professional Experience",d.experience.map(x=>`<div class="entry"><div class="top"><span class="role">${e(x.role)}</span><span class="when">${e(x.when)}</span></div><div class="org">${e(x.org)}</div>${li(x.points)}</div>`).join(""))}
+    ${sec("Projects",d.projects.map(p=>`<div class="entry"><div><span class="pn">${e(p.name)}</span><span class="st">${e(p.stack)}</span></div><div class="desc">${e(p.desc)}</div>${li(p.points)}</div>`).join(""))}
+    ${sec("Education",d.education.map(ed=>`<div class="entry"><div class="role" style="font-size:14px">${e(ed.deg)}</div><div class="org">${e(ed.school)} | ${e(ed.meta)}</div></div>`).join(""))}`;
+  }
+};
+
+/* ===================== CONTROLLER ===================== */
+const themeEl = document.getElementById("theme");
+const resumeEl = document.getElementById("resume");
+const sel = document.getElementById("tpl");
+
+function apply(key){
+  if(!T[key]) key="swiss";
+  themeEl.textContent = T[key].css;
+  resumeEl.innerHTML = T[key].html(R);
+  sel.value = key;
+  try { if(location.hash.slice(1) !== key) history.replaceState(null,"","#"+key); } catch(_){ /* sandboxed (about:srcdoc) — hash deep-link disabled, switching still works */ }
+  document.title = `${R.name} — Full Stack Developer (${T[key].label})`;
+}
+
+sel.addEventListener("change", ()=>apply(sel.value));
+window.addEventListener("hashchange", ()=>apply(location.hash.slice(1)));
+document.getElementById("print").addEventListener("click", ()=>window.print());
+
+apply(location.hash.slice(1) || "swiss");
+</script>
+</body>
+</html>
