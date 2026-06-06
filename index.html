@@ -65,41 +65,41 @@
   .btn-ghost{background:transparent;color:#fafafa;border:1px solid #34343a}
   .btn-ghost:hover{background:#202024;color:#fafafa}
 
-  @page{size:A4;margin:9mm}
+  @page{size:A4;margin:12mm}
   @media print{
     .toolbar{display:none!important}
     #toast{display:none!important}
     .stage{padding:0!important;background:#fff!important}
     body{background:#fff}
     #resume > *{opacity:1!important;transform:none!important;animation:none!important}
-    /* global compactness — overrides per-template paddings/margins to fit ~2 pages */
-    #resume{padding:0 12mm!important;margin:0 auto!important;max-width:none!important;
+    /* readable print: comfortable text across ~3 pages */
+    #resume{padding:0!important;margin:0 auto!important;max-width:none!important;
       box-shadow:none!important;border:none!important;border-radius:0!important;
-      font-size:10.5px!important;line-height:1.38!important}
-    #resume section{margin-top:9px!important;margin-bottom:0!important;
+      font-size:12.5px!important;line-height:1.5!important}
+    #resume section{margin-top:18px!important;margin-bottom:0!important;
       page-break-inside:auto!important;break-inside:auto!important}
-    #resume .entry{margin-top:6px!important;page-break-inside:avoid;break-inside:avoid}
-    #resume header{padding-bottom:6px!important;margin-bottom:0!important}
-    #resume h1{font-size:22px!important;line-height:1.04!important;letter-spacing:0!important}
-    #resume h2{font-size:10.5px!important;margin-bottom:5px!important;padding-bottom:2px!important}
-    #resume .sh{margin-bottom:5px!important;padding-bottom:3px!important}
-    #resume .sh h2{font-size:11px!important}
-    #resume .role-line{font-size:11px!important;margin-top:2px!important}
-    #resume .contact{margin-top:5px!important;padding-bottom:6px!important;font-size:9.5px!important;gap:2px 10px!important}
-    #resume p,#resume li,#resume dd,#resume dt,#resume .desc,#resume .org,#resume .when{font-size:10px!important;line-height:1.34!important}
-    #resume .role,#resume .pn{font-size:11px!important}
-    #resume ul{margin-top:2px!important}
-    #resume li{margin-bottom:2px!important;padding-left:10px!important}
-    #resume li::before{top:.5em!important}
-    #resume .mini{font-size:10px!important;margin-top:5px!important}
-    #resume dl{gap:1px 12px!important}
-    #resume .chip{font-size:9px!important;padding:2px 6px!important}
+    #resume .entry{margin-top:11px!important;page-break-inside:avoid;break-inside:avoid}
+    #resume header{padding-bottom:12px!important;margin-bottom:0!important}
+    #resume h1{font-size:30px!important;line-height:1.05!important}
+    #resume h2{font-size:13px!important;margin-bottom:9px!important;padding-bottom:4px!important}
+    #resume .sh{margin-bottom:9px!important;padding-bottom:5px!important}
+    #resume .sh h2{font-size:14px!important}
+    #resume .role-line{font-size:13px!important;margin-top:3px!important}
+    #resume .contact{margin-top:8px!important;padding-bottom:12px!important;font-size:11.5px!important;gap:3px 14px!important}
+    #resume p,#resume li,#resume dd,#resume dt,#resume .desc,#resume .org,#resume .when{font-size:12px!important;line-height:1.45!important}
+    #resume .role,#resume .pn{font-size:13.5px!important}
+    #resume ul{margin-top:5px!important}
+    #resume li{margin-bottom:3px!important;padding-left:14px!important}
+    #resume li::before{top:.55em!important}
+    #resume .mini{font-size:12px!important;margin-top:9px!important}
+    #resume dl{gap:3px 18px!important}
+    #resume .chip{font-size:11px!important;padding:3px 8px!important}
     /* template-specific tightening */
-    #resume .band,#resume .body,#resume .main,#resume .side{padding:8px 12mm!important}
+    #resume .band,#resume .body,#resume .main,#resume .side{padding:14px 18px!important}
     #resume .winbar{display:none!important;margin:0!important}
-    #resume .rule{margin-bottom:6px!important}
-    #resume .tl{padding-left:16px!important;margin-left:3px!important}
-    #resume .tl .entry::before{left:-22px!important;width:8px!important;height:8px!important;box-shadow:0 0 0 2px #fff,0 0 0 4px #dfe3e9!important}
+    #resume .rule{margin-bottom:10px!important}
+    #resume .tl{padding-left:20px!important;margin-left:4px!important}
+    #resume .tl .entry::before{left:-26px!important;width:9px!important;height:9px!important;box-shadow:0 0 0 2px #fff,0 0 0 4px #dfe3e9!important}
   }
 </style>
 <style id="theme"></style>
