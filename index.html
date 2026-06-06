@@ -97,11 +97,18 @@
     #resume dl{gap:3px 18px!important}
     #resume .chip{font-size:11px!important;padding:3px 8px!important}
     /* template-specific tightening */
-    #resume .band,#resume .body,#resume .main,#resume .side{padding:14px 18px!important}
+    #resume .band,#resume .body,#resume .main,#resume .side{padding:10mm 12mm!important}
     #resume .winbar{display:none!important;margin:0!important}
     #resume .rule{margin-bottom:10px!important}
-    #resume .tl{padding-left:20px!important;margin-left:4px!important}
-    #resume .tl .entry::before{left:-26px!important;width:9px!important;height:9px!important;box-shadow:0 0 0 2px #fff,0 0 0 4px #dfe3e9!important}
+    /* Slate timeline: shift the whole .tl right so circles never clip at page edge */
+    #resume .tl{padding-left:18px!important;margin-left:14px!important;overflow:visible!important}
+    #resume .tl .entry{overflow:visible!important}
+    #resume .tl .entry::before{left:-22px!important;width:8px!important;height:8px!important;box-shadow:0 0 0 2px #fff,0 0 0 3px #dfe3e9!important}
+    /* universal safety: no element should clip its own content in print */
+    #resume,#resume *{overflow:visible!important;max-width:100%!important}
+    /* better page-break behavior: avoid orphaning a section heading */
+    #resume h2,#resume .sh{page-break-after:avoid;break-after:avoid}
+    #resume p,#resume li{orphans:2;widows:2}
   }
 </style>
 <style id="theme"></style>
